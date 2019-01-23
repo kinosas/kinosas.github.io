@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="单例模式作为最为常见的设计模式，一直被广泛使用，最近在重构一个项目做成多线程，识别到单例模式在多线程中具有一定的风险。 单例模式在某些时候我们需要确保系统中有且仅有一个实例就要用到单例模式，单例模式的要点有三个；一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例。 在多线程中，单例模式有如下风险  这个单例模式的类的所有普通成员也成为临界资源，需要保护 如">
+<meta name="description" content="单例模式作为最为常见的设计模式，一直被广泛使用，最近在重构一个项目做成多线程，识别到单例模式在多线程中具有一定的风险。 单例模式在某些时候我们需要确保系统中有且仅有一个实例，这时候就要用到单例模式，单例模式的要点有三个；一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例。 在多线程中，单例模式有如下风险  这个单例模式的类的所有普通成员也成为临界资源，需要">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多线程下的单例模式">
 <meta property="og:url" content="http://yoursite.com/2019/01/23/Singleton-in-Multithread/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="单例模式作为最为常见的设计模式，一直被广泛使用，最近在重构一个项目做成多线程，识别到单例模式在多线程中具有一定的风险。 单例模式在某些时候我们需要确保系统中有且仅有一个实例就要用到单例模式，单例模式的要点有三个；一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例。 在多线程中，单例模式有如下风险  这个单例模式的类的所有普通成员也成为临界资源，需要保护 如">
+<meta property="og:description" content="单例模式作为最为常见的设计模式，一直被广泛使用，最近在重构一个项目做成多线程，识别到单例模式在多线程中具有一定的风险。 单例模式在某些时候我们需要确保系统中有且仅有一个实例，这时候就要用到单例模式，单例模式的要点有三个；一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例。 在多线程中，单例模式有如下风险  这个单例模式的类的所有普通成员也成为临界资源，需要">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-23T13:49:22.458Z">
+<meta property="og:updated_time" content="2019-01-23T13:58:52.847Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程下的单例模式">
-<meta name="twitter:description" content="单例模式作为最为常见的设计模式，一直被广泛使用，最近在重构一个项目做成多线程，识别到单例模式在多线程中具有一定的风险。 单例模式在某些时候我们需要确保系统中有且仅有一个实例就要用到单例模式，单例模式的要点有三个；一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例。 在多线程中，单例模式有如下风险  这个单例模式的类的所有普通成员也成为临界资源，需要保护 如">
+<meta name="twitter:description" content="单例模式作为最为常见的设计模式，一直被广泛使用，最近在重构一个项目做成多线程，识别到单例模式在多线程中具有一定的风险。 单例模式在某些时候我们需要确保系统中有且仅有一个实例，这时候就要用到单例模式，单例模式的要点有三个；一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例。 在多线程中，单例模式有如下风险  这个单例模式的类的所有普通成员也成为临界资源，需要">
 
 
 
@@ -340,11 +340,15 @@
 
       
         <p><br>单例模式作为最为常见的设计模式，一直被广泛使用，最近在重构一个项目做成多线程，识别到单例模式在多线程中具有一定的风险。</p>
-<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>在某些时候我们需要确保系统中有且仅有一个实例就要用到单例模式，单例模式的要点有三个；一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例。</p>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>在某些时候我们需要确保系统中有且仅有一个实例，这时候就要用到单例模式，单例模式的要点有三个；一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例。</p>
 <p>在多线程中，单例模式有如下风险</p>
 <ul>
 <li>这个单例模式的类的所有普通成员也成为临界资源，需要保护</li>
-<li>如果单例模式使用懒汉方式构建，可能会有生成多个实例的风险<br>下面就来介绍一下懒汉方式和饿汉方式<h3 id="懒汉方式和饿汉方式"><a href="#懒汉方式和饿汉方式" class="headerlink" title="懒汉方式和饿汉方式"></a>懒汉方式和饿汉方式</h3>懒汉模式和饿汉模式不同点在于，饿汉模式在第一次调用单例类的时候，类已经构造好了，而饿汉模式第一次被访问的时候才去构造。下面用代码来展示</li>
+<li>如果单例模式使用懒汉方式构建，可能会有生成多个实例的风险</li>
+</ul>
+<p>下面就来介绍一下懒汉方式和饿汉方式</p>
+<h3 id="懒汉方式和饿汉方式"><a href="#懒汉方式和饿汉方式" class="headerlink" title="懒汉方式和饿汉方式"></a>懒汉方式和饿汉方式</h3><p>懒汉模式和饿汉模式不同点在于，饿汉模式在第一次调用单例类的时候，类已经构造好了，而饿汉模式第一次被访问的时候才去构造。下面用代码来展示</p>
+<ul>
 <li><p>饿汉模式</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> &#123;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="function">Singleton&amp; <span class="title">getInst</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> *pInst;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    Singleton* pInst;</span><br><span class="line">&#125;</span><br><span class="line">Singleton* Singleton::pInst = <span class="keyword">new</span> Singleton();</span><br></pre></td></tr></table></figure>
 </li>
@@ -366,7 +370,7 @@
 <li>调用构造函数</li>
 <li>把地址复制给指针</li>
 </ol>
-<p>但是步骤2或者步骤3有可能被编译器优化，先执行步骤3再执行步骤2。</p>
+<p>但是步骤2或者步骤3有可能被编译器优化调换了顺序，先执行步骤3再执行步骤2。</p>
 <p>基于以上，我们来探讨一下DCLP的风险，比如说：</p>
 <ul>
 <li>第一次访问这个对象的时候，线程A判空后加了锁，然后走到了<code>pInst = new Singleton();</code>，执行了步骤3还没有执行步骤2，现在指针pInst已经被赋值，但是那块地址还没有被构造函数初始化。</li>
@@ -400,8 +404,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/03/Zsh-Vim-Tmux/" rel="next" title="Zsh-Vim-Tmux">
-                <i class="fa fa-chevron-left"></i> Zsh-Vim-Tmux
+              <a href="/2018/12/29/Change-Terminal/" rel="next" title="Ubuntu18.04终端更换为深度终端">
+                <i class="fa fa-chevron-left"></i> Ubuntu18.04终端更换为深度终端
               </a>
             
           </div>
@@ -492,7 +496,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
